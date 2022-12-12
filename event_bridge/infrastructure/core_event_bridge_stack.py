@@ -68,3 +68,18 @@ class CoreEventBridgeStack(Stack):
                                                "player-event-bus",
                                                "arn:aws:events:us-east-1:{}:event-bus/PlayerEventBus".format(os.getenv(
                                                    'CDK_DEFAULT_ACCOUNT')))))
+
+        add_player_rule = events.Rule(self, "add-player-rule",
+                                      event_bus=core_event_bus,
+                                      event_pattern=events.EventPattern(
+                                            source=["ingest-api"],
+                                            detail_type=["player"],
+                                            detail={
+                                                "eventName": ["AddPlayer"]
+                                            }
+                                      )
+                                      )
+
+        add_player_rule.add_target(target.EventBus(
+            core_event_bus=events.EventBus.from_event_bus_name(
+                self, "player-event-bus", "PlayerEventBus")))
