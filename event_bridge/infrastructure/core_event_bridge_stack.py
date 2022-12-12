@@ -80,6 +80,5 @@ class CoreEventBridgeStack(Stack):
                                       )
                                       )
 
-        add_player_rule.add_target(target.EventBus(
-            core_event_bus=events.EventBus.from_event_bus_name(
-                self, "player-event-bus", "PlayerEventBus")))
+        add_player_rule.add_target(target.EventBus(events.EventBus.from_event_bus_name(
+            self, "add-player-event-bus", "PlayerEventBus")))
