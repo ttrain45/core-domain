@@ -10,24 +10,23 @@ def handler(event, context):
     for payload in event:
         print("Decoded payload: " + str(base64.b64decode(payload["data"])))
 
-        add_player_entries = [
-            {
+        add_player_entries = {
                 'Source': 'ingest-api',
                 'DetailType': 'player',
                 'Detail': payload["data"],
                 'EventBusName': 'CoreEventBus'
-            },
-        ]
+            }
 
         print(add_player_entries)
 
-        client.put_events(
-            Entries=add_player_entries
-        )
+        #client.put_events(
+        #    Entries=add_player_entries
+        #)
 
         return {
             "statusCode": 200,
             "headers": {
                 "Content-Type": "application/json"
-            }
+            },
+            "body": json.dumps(add_player_entries)
         }
