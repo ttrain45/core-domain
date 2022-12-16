@@ -11,9 +11,9 @@ def handler(event, context):
         print("Decoded payload: " + str(base64.b64decode(payload["data"])))
 
         add_player_entries = {
-                'Source': 'ingest-api',
-                'DetailType': 'player',
-                'Detail': payload["data"],
+                'source': 'ingest-api',
+                'detail-type': 'player',
+                'detail': str(base64.b64decode(payload["data"])),
                 'EventBusName': 'CoreEventBus'
             }
 
