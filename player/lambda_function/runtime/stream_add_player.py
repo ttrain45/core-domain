@@ -7,13 +7,10 @@ def handler(event, context):
     for payload in event:
         print("Decoded payload: " + str(base64.b64decode(payload["data"])))
 
-        decoded_payload_string = base64.b64decode(payload["data"])
-        print(decoded_payload_string.decode("utf-8"))
-
         add_player_entries = {
                 "source": "ingest-api",
                 "detail-type": "player",
-                "detail": decoded_payload_string.decode("utf-8")
+                "detail": json.loads(base64.b64decode(payload["data"]).decode("utf-8"))
             }
 
         print(json.dumps(add_player_entries))
