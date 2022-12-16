@@ -88,7 +88,9 @@ class CoreEventBridgeStack(Stack):
                                       event_pattern=events.EventPattern(
                                             source=["ingest-api"],
                                             detail_type=["player"],
-                                            method=["PATCH"]
+                                            detail={
+                                                "eventName": ["EditPlayer"]
+                                            }
                                       )
                                       )
 
