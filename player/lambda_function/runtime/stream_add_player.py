@@ -1,8 +1,5 @@
-import boto3
 import base64
 import json
-
-client = boto3.client('events')
 
 def handler(event, context):
     print(event[0])
@@ -10,21 +7,16 @@ def handler(event, context):
     for payload in event:
         print("Decoded payload: " + str(base64.b64decode(payload["data"])))
 
-        payload_string = json.loads(str(base64.b64decode(payload["data"])))
-
-        print(payload_string)
+        decoded_payload_string = base64.b64decode(payload["data"])
+        print(decoded_payload_string.decode("utf-8"))
 
         add_player_entries = {
                 "source": "ingest-api",
                 "detail-type": "player",
-                "detail": payload_string
+                "detail": decoded_payload_string
             }
 
         print(json.dumps(add_player_entries))
-
-        #client.put_events(
-        #    Entries=add_player_entries
-        #)
 
         return {
             "statusCode": 200,
