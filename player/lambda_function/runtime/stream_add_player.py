@@ -13,7 +13,7 @@ def handler(event, context):
         add_player_entries = {
                 "source": "ingest-api",
                 "detail-type": "player",
-                "detail": decoded_payload_string
+                "detail": decoded_payload_string.decode("utf-8")
             }
 
         print(json.dumps(add_player_entries))
