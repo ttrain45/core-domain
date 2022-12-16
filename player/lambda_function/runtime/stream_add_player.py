@@ -3,7 +3,7 @@ import base64
 
 client = boto3.client('events')
 
-def lambda_handler(event, context):
+def handler(event, context):
     print(event[0])
 
     for payload in event:
