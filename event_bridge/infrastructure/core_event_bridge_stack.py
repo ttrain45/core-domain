@@ -82,3 +82,15 @@ class CoreEventBridgeStack(Stack):
 
         add_player_rule.add_target(target.EventBus(events.EventBus.from_event_bus_name(
             self, "add-player-event-bus", "PlayerEventBus")))
+
+        edit_player_rule = events.Rule(self, "edit-player-rule",
+                                      event_bus=core_event_bus,
+                                      event_pattern=events.EventPattern(
+                                            source=["ingest-api"],
+                                            detail_type=["player"],
+                                            method=["PATCH"]
+                                      )
+                                      )
+
+        edit_player_rule.add_target(target.EventBus(events.EventBus.from_event_bus_name(
+            self, "edit-player-event-bus", "PlayerEventBus")))
