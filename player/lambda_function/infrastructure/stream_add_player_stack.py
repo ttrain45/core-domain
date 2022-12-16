@@ -2,7 +2,8 @@ from aws_cdk import (
     Stack,
     aws_iam as iam,
     aws_lambda as _lambda,
-    aws_lambda_python_alpha as python
+    aws_lambda_python_alpha as python,
+    aws_events as events,
 )
 from constructs import Construct
 
@@ -25,3 +26,10 @@ class StreamAddPlayerStack(Stack):
         ### from event bridge events ###
         principal = iam.ServicePrincipal("events.amazonaws.com")
         stream_add_player.grant_invoke(principal)
+
+        ### Retrieve Core Event Bus from event bus name ###
+        core_event_bus = events.EventBus.from_event_bus_name(
+            self, "CoreEventBus", "CoreEventBus")
+
+        ### Grant Ingest Api permissions for Core Event Bus put events ###
+        core_event_bus.grant_put_events_to(stream_add_player)
