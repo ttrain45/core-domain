@@ -1,5 +1,6 @@
 import boto3
 import base64
+import json
 
 client = boto3.client('events')
 
@@ -12,7 +13,7 @@ def handler(event, context):
         add_player_entries = [
             {
                 'Source': 'ingest-api',
-                'DetailType': 'team',
+                'DetailType': 'player',
                 'Detail': payload["data"],
                 'EventBusName': 'CoreEventBus'
             },
@@ -23,3 +24,10 @@ def handler(event, context):
         client.put_events(
             Entries=add_player_entries
         )
+
+        return {
+            "statusCode": 200,
+            "headers": {
+                "Content-Type": "application/json"
+            }
+        }
