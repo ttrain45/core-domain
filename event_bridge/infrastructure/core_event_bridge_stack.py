@@ -94,5 +94,16 @@ class CoreEventBridgeStack(Stack):
                                       )
                                       )
 
-        edit_player_rule.add_target(target.EventBus(events.EventBus.from_event_bus_name(
+        delete_player_rule.add_target(target.EventBus(events.EventBus.from_event_bus_name(
             self, "edit-player-event-bus", "PlayerEventBus")))
+
+        delete_player_rule = events.Rule(self, "delete-player-rule",
+                                      event_bus=core_event_bus,
+                                      event_pattern=events.EventPattern(
+                                            source=["ingest-api"],
+                                            detail_type=["player", "DELETE"],
+                                      )
+                                      )
+
+        edit_player_rule.add_target(target.EventBus(events.EventBus.from_event_bus_name(
+            self, "delete-player-event-bus", "PlayerEventBus")))
