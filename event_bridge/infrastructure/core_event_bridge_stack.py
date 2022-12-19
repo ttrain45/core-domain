@@ -94,7 +94,7 @@ class CoreEventBridgeStack(Stack):
                                       )
                                       )
 
-        delete_player_rule.add_target(target.EventBus(events.EventBus.from_event_bus_name(
+        edit_player_rule.add_target(target.EventBus(events.EventBus.from_event_bus_name(
             self, "edit-player-event-bus", "PlayerEventBus")))
 
         delete_player_rule = events.Rule(self, "delete-player-rule",
@@ -105,5 +105,5 @@ class CoreEventBridgeStack(Stack):
                                       )
                                       )
 
-        edit_player_rule.add_target(target.EventBus(events.EventBus.from_event_bus_name(
+        delete_player_rule.add_target(target.EventBus(events.EventBus.from_event_bus_name(
             self, "delete-player-event-bus", "PlayerEventBus")))
