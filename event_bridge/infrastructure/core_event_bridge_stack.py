@@ -102,7 +102,9 @@ class CoreEventBridgeStack(Stack):
                                       event_pattern=events.EventPattern(
                                             source=["ingest-api"],
                                             detail_type=["player"],
-                                            detail=["DELETE"]
+                                            detail={
+                                                "method": ["DELETE"]
+                                            },
                                       )
                                       )
 
