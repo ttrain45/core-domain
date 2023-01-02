@@ -58,4 +58,4 @@ class CoreEventBridgeStack(Stack):
 
         logging_rule = events.Rule(self, "logging_rule", event_pattern={"account": ["284369237500"]})
 
-        logging_rule.add_target(target.CloudWatchLogGroup(event_bridge_log_group, max_event_age=Duration.days(3)))
+        logging_rule.add_target(target.CloudWatchLogGroup(event_bridge_log_group, max_event_age=Duration.days(1)))
