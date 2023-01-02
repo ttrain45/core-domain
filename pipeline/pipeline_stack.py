@@ -20,7 +20,7 @@ class PipelineStack(Stack):
             synth=pipelines.ShellStep('Synth',
                                       input=pipelines.CodePipelineSource.git_hub(
                                           'ttrain45/core-domain',
-                                          'feature/delete-player',
+                                          'feature/dumb-core-domain',
                                           authentication=SecretValue.secrets_manager(
                                               'exploration-token')
                                       ),
