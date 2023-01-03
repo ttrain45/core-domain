@@ -39,7 +39,7 @@ class CoreEventBridgeStack(Stack):
                                          event_bus=core_event_bus,
                                          event_pattern=events.EventPattern(
                                              source=["ingest-api"],
-                                             detail_type=["player"],
+                                             detail_type=["PLAYER"],
                                          )
                                         )
 
