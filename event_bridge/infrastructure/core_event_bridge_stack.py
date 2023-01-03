@@ -16,14 +16,7 @@ class CoreEventBridgeStack(Stack):
 
     def __init__(self, scope: Construct, id: str, **kwargs) -> None:
         super().__init__(scope, id, **kwargs)
-
-        event_bridge_log_group = logs.LogGroup(
-            self, 
-            "CoreEventBridgeLogs",
-            removal_policy=RemovalPolicy.DESTROY,
-            retention=logs.RetentionDays.ONE_DAY
-        )
-
+        
         ### Create Core Event Bus ###
         core_event_bus = events.EventBus(self,
                                          id='core-event-bus',
@@ -56,6 +49,18 @@ class CoreEventBridgeStack(Stack):
                                                "arn:aws:events:us-east-1:{}:event-bus/PlayerEventBus".format(os.getenv(
                                                    'CDK_DEFAULT_ACCOUNT')))))
 
-        logging_rule = events.Rule(self, "logging_rule", event_pattern={"account": ["284369237500"]})
+        event_bridge_log_group = logs.LogGroup(
+            self, 
+            "CoreEventBridgeLogs",
+            removal_policy=RemovalPolicy.DESTROY,
+            retention=logs.RetentionDays.ONE_DAY
+        )
+
+        logging_rule = events.Rule(
+            self,
+            "logging_rule",
+            event_bus=core_event_bus,
+            event_pattern={"account": ["284369237500"]}
+            )
 
         logging_rule.add_target(target.CloudWatchLogGroup(event_bridge_log_group, max_event_age=Duration.days(1)))
