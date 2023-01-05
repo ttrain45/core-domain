@@ -43,6 +43,13 @@ class CoreEventBridgeStack(Stack):
                                          )
                                         )
 
+        extra_rule = events.Rule(self, "extra_rule",
+                                         event_bus=core_event_bus,
+                                         event_pattern=events.EventPattern(
+                                             source=["extra"],
+                                         )
+                                        )
+
         player_api_event_rule.add_target(target.EventBus(
             events.EventBus.from_event_bus_arn(self,
                                                "player-event-bus",
